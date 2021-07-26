@@ -8,12 +8,10 @@ let { JWT_SECRET } = require("../config/key");
 exports.localStrategy = new LocalStrategy(async (username, password, done) => {
   try {
     const user = await User.findOne({
-      where: { username: username },
+      where: { phonenumber: username },
     });
-
-    const passowrdMatch = user
-      ? await bcrypt.compare(password, user.password)
-      : false;
+console.log(user)
+    const passowrdMatch = user ? user.code === password : false;
     return done(null, passowrdMatch ? user : false);
   } catch (error) {
     done(error);
