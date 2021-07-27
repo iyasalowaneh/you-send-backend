@@ -1,7 +1,13 @@
 const express = require("express");
 const { session } = require("passport");
 const passport = require("passport");
-let { signup, signin ,updateUser ,fetchUser ,printUsers} = require("../Controllers/usersController");
+let {
+  signup,
+  signin,
+  updateUser,
+  fetchUser,
+  printUsers,
+} = require("../Controllers/usersController");
 
 const router = express.Router();
 router.param("userId", async (req, res, next, userId) => {
@@ -21,22 +27,8 @@ router.post(
   passport.authenticate("local", { session: false }),
   signin
 );
-router.put(
-  "/:userId",  updateUser
-);
+router.put("/:userId", updateUser);
 
-router.get(
-  "/users",  printUsers
-);
-
-
-
-
-
-
-
-
-
-
+router.get("/users", printUsers);
 
 module.exports = router;
