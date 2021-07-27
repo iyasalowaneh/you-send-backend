@@ -4,6 +4,7 @@ module.exports = User = (sequelize, DataTypes) => {
     phonenumber: { type: DataTypes.STRING, allowNull: false, unique: true },
     code: { type: DataTypes.STRING, allowNull: false },
     status: { type: DataTypes.STRING },
+    image: { type: DataTypes.STRING },
   });
 
   return User;
