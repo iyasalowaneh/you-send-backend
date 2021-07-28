@@ -1,7 +1,7 @@
 const express = require("express");
 const { session } = require("passport");
 const passport = require("passport");
-let {
+let {messageCreat,
     roomList,
     fetchRoom,
     roomCreat
@@ -23,6 +23,8 @@ router.param("roomId", async (req, res, next, roomId) => {
 
 router.post("/", roomCreat);
 router.get("/",roomList );
+router.post("/:roomId/messageCreat",  passport.authenticate("jwt", { session: false }),
+messageCreat);
 
 
 

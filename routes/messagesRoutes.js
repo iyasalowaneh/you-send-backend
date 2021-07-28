@@ -23,7 +23,7 @@ router.param("senderId", async (req, res, next, senderId) => {
   }
 });
 
-router.post("/:senderId/messageCreat", messageCreat);
 
+router.get("/",messageList );
 
 module.exports = router;
