@@ -1,5 +1,7 @@
 const express = require("express");
 let { Room } = require("../db/models");
+let { User } = require("../db/models");
+
 let { JWT_EXPIRATION_MS, JWT_SECRET } = require("../config/key");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -25,7 +27,7 @@ exports.messageCreat = async (req, res, next) => {
 
 exports.roomCreat = async (req, res, next) => {
   try {
-    // req.body.messageId = req.room.id;
+     req.body.roomId = req.user.id;
 
     const newRoom = await Room.create(req.body);
     res.status(201).json(newRoom);
@@ -45,6 +47,12 @@ exports.roomList = async (req, res) => {
       attributes: {
         exclude: ["createdAt", "updatedAt"],
       },
+      include: {
+        model: User,
+        as : "users",
+        attributes: ["id"],
+      },
+
     });
     res.json(rooms);
   } catch (error) {

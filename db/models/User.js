@@ -16,6 +16,7 @@ module.exports = User = (sequelize, DataTypes) => {
 
   SequelizeSlugify.slugifyModel(User, { source: ["name"] });
 
+  
 
   return User;
 };
