@@ -2,7 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const passport = require("passport");
 const userRoutes = require("./routes/usersRoutes");
-
+const messagesRoutes = require("./routes/messagesRoutes")
+const roomsRoutes = require("./routes/roomsRoutes")
 const { localStrategy, jwtStrategy } = require("./middleware/passport");
 const db = require("./db/models");
 
@@ -16,7 +17,10 @@ passport.use(localStrategy);
 passport.use(jwtStrategy);
 
 //Routes
+app.use("/rooms", roomsRoutes);
+app.use("/messages", messagesRoutes);
 app.use("/", userRoutes);
+
 
 app.use("/media", express.static("media"));
 

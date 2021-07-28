@@ -1,0 +1,29 @@
+const express = require("express");
+const { session } = require("passport");
+const passport = require("passport");
+let {
+    roomList,
+    fetchRoom,
+    roomCreat
+} = require("../Controllers/roomController");
+
+
+const router = express.Router();
+router.param("roomId", async (req, res, next, roomId) => {
+  const room = await fetchRoom(roomId, next);
+  if (room) {
+    req.room = room;
+    next();
+  } else {
+    const err = new Error("user not found");
+    err.status = 404;
+    next(err);
+  }
+});
+
+router.post("/", roomCreat);
+router.get("/",roomList );
+
+
+
+module.exports = router;
