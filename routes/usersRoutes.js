@@ -1,5 +1,5 @@
 const express = require("express");
-const { session } = require("passport");
+const { session } = require("passport"); //Remove unused import
 const passport = require("passport");
 let {
   signup,
@@ -10,6 +10,7 @@ let {
 } = require("../Controllers/usersController");
 
 const router = express.Router();
+
 router.param("userId", async (req, res, next, userId) => {
   const user = await fetchUser(userId, next);
   if (user) {
@@ -22,6 +23,7 @@ router.param("userId", async (req, res, next, userId) => {
   }
 });
 router.post("/signup", signup);
+
 router.post(
   "/signin",
   passport.authenticate("local", { session: false }),

@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 
 let { Message } = require("../db/models");
 
+//Rename to messageCreate
 exports.messageCreat = async (req, res, next) => {
   try {
     req.body.roomId = req.room.id;
@@ -23,6 +24,7 @@ exports.messageCreat = async (req, res, next) => {
   }
 };
 
+//Rename to roomCreate
 exports.roomCreat = async (req, res, next) => {
   try {
     // req.body.messageId = req.room.id;

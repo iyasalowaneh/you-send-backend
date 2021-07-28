@@ -1,35 +1,41 @@
 const express = require("express");
 const cors = require("cors");
+
+//Authentication
 const passport = require("passport");
-const userRoutes = require("./routes/usersRoutes");
-const messagesRoutes = require("./routes/messagesRoutes")
-const roomsRoutes = require("./routes/roomsRoutes")
 const { localStrategy, jwtStrategy } = require("./middleware/passport");
-const db = require("./db/models");
+
+//Route Imports
+const userRoutes = require("./routes/usersRoutes");
+const messagesRoutes = require("./routes/messagesRoutes");
+const roomsRoutes = require("./routes/roomsRoutes");
+
+const db = require("./db/models"); //Remove unused import
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
-//passport
+//Passport Middleware
 app.use(passport.initialize());
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
 //Routes
+app.use("/", userRoutes);
+app.use("/media", express.static("media"));
 app.use("/rooms", roomsRoutes);
 app.use("/messages", messagesRoutes);
-app.use("/", userRoutes);
 
-
-app.use("/media", express.static("media"));
-
-//error middleware
+//Error Middleware
 app.use((err, req, res, next) => {
   res
     .status(err.status || 500)
     .json({ message: err.message || "Internal Server Error" });
 });
+
+//Path Not Found Middleware
 app.use((req, res, next) => {
   res.status(404).json({ message: "path not found" });
 });

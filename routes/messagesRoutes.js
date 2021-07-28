@@ -1,16 +1,15 @@
 const express = require("express");
-const { session } = require("passport");
-const passport = require("passport");
+const { session } = require("passport"); //Remove unused import
+const passport = require("passport"); //Remove unused import
 let {
-    messageCreat,
-    messageList,
-    fetchMessage
+  messageCreat, //Remove unused import
+  messageList,
+  fetchMessage, //Remove unused import
 } = require("../Controllers/messagesController");
-let {
-    fetchUser,
-  } = require("../Controllers/usersController");
+let { fetchUser } = require("../Controllers/usersController");
 
 const router = express.Router();
+
 router.param("senderId", async (req, res, next, senderId) => {
   const user = await fetchUser(senderId, next);
   if (user) {
@@ -23,7 +22,6 @@ router.param("senderId", async (req, res, next, senderId) => {
   }
 });
 
-
-router.get("/",messageList );
+router.get("/", messageList);
 
 module.exports = router;
