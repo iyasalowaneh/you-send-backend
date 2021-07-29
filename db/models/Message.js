@@ -1,6 +1,8 @@
 module.exports = Message = (sequelize, DataTypes) => {
   const Message = sequelize.define("Message", {
     content: { type: DataTypes.STRING },
+    image: { type: DataTypes.STRING },
+
   });
 
   Message.associate = (models) => {
@@ -20,6 +22,7 @@ module.exports = Message = (sequelize, DataTypes) => {
       foreignKey: "roomId",
     });
   };
+  
 
   return Message;
 };

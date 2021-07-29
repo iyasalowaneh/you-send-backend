@@ -5,6 +5,21 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 
+exports.messageCreat = async (req, res, next) => {
+  try {
+    req.body.senderId = req.user.id;
+
+    const newMessage = await Message.create(req.body);
+    res.status(201).json(newMessage);
+
+    next({
+      status: 401,
+      message: "you can not create a Message",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 
 exports.messageList = async (req, res) => {

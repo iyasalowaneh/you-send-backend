@@ -27,7 +27,7 @@ exports.messageCreat = async (req, res, next) => {
 
 exports.roomCreat = async (req, res, next) => {
   try {
-     req.body.roomId = req.user.id;
+    //  req.body.roomId = req.user.id;
 
     const newRoom = await Room.create(req.body);
     res.status(201).json(newRoom);

@@ -18,7 +18,7 @@ passport.use(jwtStrategy);
 
 //Routes
 app.use("/rooms", roomsRoutes);
-app.use("/messages", messagesRoutes);
+app.use("/", messagesRoutes);
 app.use("/", userRoutes);
 
 
