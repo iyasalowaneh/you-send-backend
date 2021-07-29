@@ -24,6 +24,7 @@ router.param("senderId", async (req, res, next, senderId) => {
 });
 
 
-router.get("/",messageList );
+router.get("/messages",messageList );
+router.post("/messageCreat",passport.authenticate("jwt", { session: false }), messageCreat);
 
 module.exports = router;
