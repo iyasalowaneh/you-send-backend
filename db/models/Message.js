@@ -13,7 +13,12 @@ module.exports = Message = (sequelize, DataTypes) => {
     Message.belongsTo(models.User, {
       foreignKey: "senderId",
     });
-
+    models.User.hasMany(Message, {
+      foreignKey: "reciverId",
+    });
+    Message.belongsTo(models.User, {
+      foreignKey: "reciverId",
+    });
     models.Room.hasMany(Message, {
       foreignKey: "roomId",
       as: "Messages",
