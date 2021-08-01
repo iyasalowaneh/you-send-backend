@@ -4,7 +4,7 @@ const passport = require("passport");
 let {
     messageCreat,
     messageList,
-    fetchMessage
+    messageListByUser
 } = require("../Controllers/messagesController");
 let {
     fetchUser,
@@ -25,6 +25,7 @@ router.param("senderId", async (req, res, next, senderId) => {
 
 
 router.get("/messages",messageList );
+
 router.post("/messageCreat",passport.authenticate("jwt", { session: false }), messageCreat);
 
 module.exports = router;

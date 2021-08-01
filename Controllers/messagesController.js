@@ -35,6 +35,22 @@ exports.messageList = async (req, res) => {
     }
   };
 
+  exports.messageListByUser = async (req, res) => {
+    try {
+      const userMessage = await Message.findOne({ where: { senderId: User.id } })
+        console.log(userMessage)
+      
+      res.json(userMessage);
+    } catch (error) {
+      res.status(500).json({ message: "Server Error" });
+    }
+  };
+
+
+
+
+
+
 
 exports.fetchMessage = async (messageId, next) => {
     try {
@@ -45,3 +61,5 @@ exports.fetchMessage = async (messageId, next) => {
       next(error);
     }
   };
+
+ 
