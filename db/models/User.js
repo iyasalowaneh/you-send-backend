@@ -1,6 +1,5 @@
 const SequelizeSlugify = require("sequelize-slugify");
 
-
 module.exports = User = (sequelize, DataTypes) => {
   const User = sequelize.define("User", {
     name: { type: DataTypes.STRING },
@@ -15,8 +14,6 @@ module.exports = User = (sequelize, DataTypes) => {
   });
 
   SequelizeSlugify.slugifyModel(User, { source: ["name"] });
-
-  
 
   return User;
 };

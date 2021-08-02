@@ -27,6 +27,8 @@ router.post(
   passport.authenticate("local", { session: false }),
   signin
 );
+// REVIEW: You can't put the user ID in the path, that's insecure.
+// It should be passed in the token, and you need to use jwt strategy.
 router.put("/:userId", updateUser);
 
 router.get("/users", printUsers);

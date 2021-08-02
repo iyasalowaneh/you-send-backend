@@ -9,6 +9,7 @@ exports.messageCreat = async (req, res, next) => {
     req.body.senderId = req.user.id;
     const newMessage = await Message.create(req.body);
     res.status(201).json(newMessage);
+    // REVIEW: Why do you still have this next?
 
     next({
       status: 401,

@@ -6,7 +6,6 @@ const jwt = require("jsonwebtoken");
 const twilio = require("twilio");
 exports.signup = async (req, res, next) => {
   try {
- 
     let code = Math.floor(100000 + Math.random() * 900000);
     let client = new twilio(
       "AC2367b6cf83997dfed8e9eddafb4305ff",
@@ -20,18 +19,16 @@ exports.signup = async (req, res, next) => {
       })
       .then((message) => console.log(message.sid));
     const myUser = await User.findOne({
-      where:  { phonenumber: req.body.phonenumber } 
-
-      
+      where: { phonenumber: req.body.phonenumber },
     });
-    if (myUser) await myUser.update({code})
+    if (myUser) await myUser.update({ code });
     else
-     await User.create({
-      phonenumber: req.body.phonenumber,
-      name:req.body.name,
-      status:req.body.status,
-      code,
-    });
+      await User.create({
+        phonenumber: req.body.phonenumber,
+        name: req.body.name,
+        status: req.body.status,
+        code,
+      });
     // const token = generteToken(newUser);
 
     res.status(201).json("sucess");
@@ -45,18 +42,18 @@ exports.signin = async (req, res, next) => {
   res.json({ token });
 };
 
+// REVIEW: generate, fix typo
 const generteToken = (user) => {
   const payload = {
     id: user.id,
     name: user.name,
-   
+
     exp: Date.now() + parseInt(JWT_EXPIRATION_MS),
   };
   const token = jwt.sign(payload, JWT_SECRET);
   return token;
 };
-
-
+// REVIEW: Remove commented out code
 // exports.updateUser = async (req, res, next) => {
 //   console.log(req.User)
 //   try {
@@ -69,7 +66,6 @@ const generteToken = (user) => {
 //     next(error);
 //   }
 // };
-
 
 exports.updateUser = async (req, res, next) => {
   try {
@@ -93,6 +89,7 @@ exports.fetchUser = async (userId, next) => {
   }
 };
 
+// REVIEW: Should be fetchUsers
 exports.printUsers = async (req, res, next) => {
   try {
     const users = await User.findAll({
@@ -103,5 +100,3 @@ exports.printUsers = async (req, res, next) => {
     next(error);
   }
 };
-
-

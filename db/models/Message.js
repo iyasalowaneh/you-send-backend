@@ -2,10 +2,10 @@ module.exports = Message = (sequelize, DataTypes) => {
   const Message = sequelize.define("Message", {
     content: { type: DataTypes.STRING },
     image: { type: DataTypes.STRING },
-
   });
 
   Message.associate = (models) => {
+    //REVIEW: Why is this relation repeated?
     models.User.hasMany(Message, {
       foreignKey: "senderId",
       as: "Messages",
@@ -27,7 +27,6 @@ module.exports = Message = (sequelize, DataTypes) => {
       foreignKey: "roomId",
     });
   };
-  
 
   return Message;
 };
