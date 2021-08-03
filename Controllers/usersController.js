@@ -95,3 +95,12 @@ exports.printUsers = async (req, res, next) => {
 };
 
 
+exports.removeUser = async (req, res, next) => {
+  try {
+    await req.user.destroy();
+    res.status(204).end();
+  } catch (error) {
+    next(error);
+  }
+};
+

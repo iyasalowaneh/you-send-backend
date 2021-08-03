@@ -7,6 +7,7 @@ let {
   updateUser,
   fetchUser,
   printUsers,
+  removeUser
 } = require("../Controllers/usersController");
 const upload = require("../middleware/multer");
 
@@ -22,6 +23,8 @@ router.param("userId", async (req, res, next, userId) => {
     next(err);
   }
 });
+router.delete("/:userId", removeUser);
+
 router.post("/signup", upload.single("image"), signup);
 router.post(
   "/signin",
@@ -31,5 +34,8 @@ router.post(
 router.put("/:userId", upload.single("image"), updateUser);
 
 router.get("/users", printUsers);
+
+
+
 
 module.exports = router;
