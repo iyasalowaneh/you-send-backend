@@ -36,15 +36,16 @@ exports.messageCreat = async (req, res, next) => {
 
 exports.roomCreat = async (req, res, next) => {
   try {
-  
+    if (req.file) {
+      req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
+    }
     const newRoom = await Room.create(req.body);
-
-    const roomUsers = req.body.users.map((user) => ({
+    const users = JSON.parse(req.body.users).map((user) => ({
       userId: user,
       roomId: newRoom.id,
     }));
-    
-    const  newRoomUsers = await Room_User.bulkCreate(roomUsers)
+
+    const newRoomUsers = await Room_User.bulkCreate(users);
 
     res.status(201).json(newRoomUsers);
 
@@ -70,5 +71,14 @@ exports.roomList = async (req, res) => {
     res.json(rooms);
   } catch (error) {
     res.status(500).json({ message: "Server Error" });
+  }
+};
+
+exports.removeRoom = async (req, res, next) => {
+  try {
+    await req.room.destroy();
+    res.status(204).end();
+  } catch (error) {
+    next(error);
   }
 };

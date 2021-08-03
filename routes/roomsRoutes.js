@@ -1,8 +1,10 @@
 const express = require("express");
 const { session } = require("passport");
+const upload = require("../middleware/multer");
 
 const passport = require("passport");
 let {
+  removeRoom,
   messageCreat,
   roomList,
   fetchRoom,
@@ -21,8 +23,9 @@ router.param("roomId", async (req, res, next, roomId) => {
     next(err);
   }
 });
+router.delete("/:roomId", removeRoom);
 
-router.post("/",  roomCreat);
+router.post("/", upload.single("image"), roomCreat);
 router.get("/", roomList);
 router.post(
   "/:roomId/messageCreat",
