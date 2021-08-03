@@ -7,7 +7,7 @@ let {
   updateUser,
   fetchUser,
   printUsers,
-  removeUser
+  removeUser,
 } = require("../Controllers/usersController");
 const upload = require("../middleware/multer");
 
@@ -31,11 +31,14 @@ router.post(
   passport.authenticate("local", { session: false }),
   signin
 );
-router.put("/:userId", upload.single("image"), updateUser);
+router.put(
+  "/userUpdate",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
+
+  updateUser
+);
 
 router.get("/users", printUsers);
-
-
-
 
 module.exports = router;
