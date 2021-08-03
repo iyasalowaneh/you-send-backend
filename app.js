@@ -2,10 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const passport = require("passport");
 const userRoutes = require("./routes/usersRoutes");
-const messagesRoutes = require("./routes/messagesRoutes")
-const roomsRoutes = require("./routes/roomsRoutes")
+const messagesRoutes = require("./routes/messagesRoutes");
+const roomsRoutes = require("./routes/roomsRoutes");
 const { localStrategy, jwtStrategy } = require("./middleware/passport");
 const db = require("./db/models");
+const path = require("path");
 
 const app = express();
 app.use(cors());
@@ -21,8 +22,7 @@ app.use("/rooms", roomsRoutes);
 app.use("/", messagesRoutes);
 app.use("/", userRoutes);
 
-
-app.use("/media", express.static("media"));
+app.use("/media", express.static(path.join(__dirname, "media")));
 
 //error middleware
 app.use((err, req, res, next) => {

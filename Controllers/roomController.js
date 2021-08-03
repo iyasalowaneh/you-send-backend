@@ -2,13 +2,11 @@ const express = require("express");
 let { Room } = require("../db/models");
 let { User } = require("../db/models");
 let { Message } = require("../db/models");
-let {Room_User} = require("../db/models");
+let { Room_User } = require("../db/models");
 
 let { JWT_EXPIRATION_MS, JWT_SECRET } = require("../config/key");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
-
 
 exports.fetchRoom = async (roomId, next) => {
   try {
@@ -38,14 +36,15 @@ exports.messageCreat = async (req, res, next) => {
 
 exports.roomCreat = async (req, res, next) => {
   try {
-
+  
     const newRoom = await Room.create(req.body);
+
     const roomUsers = req.body.users.map((user) => ({
-      userId:user,
+      userId: user,
       roomId: newRoom.id,
     }));
-
-    const newRoomUsers = await Room_User.bulkCreate(roomUsers);
+    
+    const  newRoomUsers = await Room_User.bulkCreate(roomUsers)
 
     res.status(201).json(newRoomUsers);
 
@@ -73,5 +72,3 @@ exports.roomList = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
-
-

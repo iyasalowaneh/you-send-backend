@@ -3,6 +3,7 @@ const SequelizeSlugify = require("sequelize-slugify");
 module.exports = Room = (sequelize, DataTypes) => {
   const Room = sequelize.define("Room", {
     name: { type: DataTypes.STRING },
+    image: { type: DataTypes.STRING },
   });
 
   SequelizeSlugify.slugifyModel(Room, { source: ["name"] });

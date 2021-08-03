@@ -1,12 +1,13 @@
 const express = require("express");
 const { session } = require("passport");
-const passport = require("passport");
-let {messageCreat,
-    roomList,
-    fetchRoom,
-    roomCreat
-} = require("../Controllers/roomController");
 
+const passport = require("passport");
+let {
+  messageCreat,
+  roomList,
+  fetchRoom,
+  roomCreat,
+} = require("../Controllers/roomController");
 
 const router = express.Router();
 router.param("roomId", async (req, res, next, roomId) => {
@@ -21,11 +22,12 @@ router.param("roomId", async (req, res, next, roomId) => {
   }
 });
 
-router.post("/", roomCreat);
-router.get("/",roomList );
-router.post("/:roomId/messageCreat",  passport.authenticate("jwt", { session: false }),
-messageCreat);
-
-
+router.post("/",  roomCreat);
+router.get("/", roomList);
+router.post(
+  "/:roomId/messageCreat",
+  passport.authenticate("jwt", { session: false }),
+  messageCreat
+);
 
 module.exports = router;

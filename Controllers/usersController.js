@@ -6,7 +6,9 @@ const jwt = require("jsonwebtoken");
 const twilio = require("twilio");
 exports.signup = async (req, res, next) => {
   try {
- 
+    if (req.file) {
+      req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
+    }
     let code = Math.floor(100000 + Math.random() * 900000);
     let client = new twilio(
       "AC2367b6cf83997dfed8e9eddafb4305ff",
@@ -29,6 +31,7 @@ exports.signup = async (req, res, next) => {
      await User.create({
       phonenumber: req.body.phonenumber,
       name:req.body.name,
+      image:req.body.image,
       status:req.body.status,
       code,
     });
@@ -49,6 +52,7 @@ const generteToken = (user) => {
   const payload = {
     id: user.id,
     name: user.name,
+    image: user.image,
    
     exp: Date.now() + parseInt(JWT_EXPIRATION_MS),
   };
@@ -57,25 +61,11 @@ const generteToken = (user) => {
 };
 
 
-// exports.updateUser = async (req, res, next) => {
-//   console.log(req.User)
-//   try {
-//     // if (req.file) {
-//     //   req.body.image =` http://${req.get("host")}/media/${req.file.filename}`;
-//     // }
-//     await User.update(req.body);
-//     res.status(201).json(req.user);
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
-
 exports.updateUser = async (req, res, next) => {
   try {
-    // if (req.file) {
-    //   req.body.image = http://${req.get("host")}/media/${req.file.filename};
-    // }
+    if (req.file) {
+      req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
+    }
     await req.user.update(req.body);
     res.status(201).json(req.user);
   } catch (error) {
