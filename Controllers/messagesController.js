@@ -6,6 +6,9 @@ const jwt = require("jsonwebtoken");
 
 exports.messageCreat = async (req, res, next) => {
   try {
+    if (req.file) {
+      req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
+    }
     req.body.senderId = req.user.id;
     const newMessage = await Message.create(req.body);
     res.status(201).json(newMessage);

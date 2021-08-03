@@ -8,6 +8,7 @@ let {
   fetchUser,
   printUsers,
 } = require("../Controllers/usersController");
+const upload = require("../middleware/multer");
 
 const router = express.Router();
 router.param("userId", async (req, res, next, userId) => {
@@ -21,13 +22,13 @@ router.param("userId", async (req, res, next, userId) => {
     next(err);
   }
 });
-router.post("/signup", signup);
+router.post("/signup", upload.single("image"), signup);
 router.post(
   "/signin",
   passport.authenticate("local", { session: false }),
   signin
 );
-router.put("/:userId", updateUser);
+router.put("/:userId", upload.single("image"), updateUser);
 
 router.get("/users", printUsers);
 

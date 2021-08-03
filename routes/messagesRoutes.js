@@ -1,14 +1,14 @@
 const express = require("express");
 const { session } = require("passport");
+const upload = require("../middleware/multer");
+
 const passport = require("passport");
 let {
-    messageCreat,
-    messageList,
-    fetchMessage
+  messageCreat,
+  messageList,
+  fetchMessage,
 } = require("../Controllers/messagesController");
-let {
-    fetchUser,
-  } = require("../Controllers/usersController");
+let { fetchUser } = require("../Controllers/usersController");
 
 const router = express.Router();
 router.param("senderId", async (req, res, next, senderId) => {
@@ -22,10 +22,13 @@ router.param("senderId", async (req, res, next, senderId) => {
     next(err);
   }
 });
- 
 
-
-router.get("/messages",messageList );
-router.post("/messageCreat",passport.authenticate("jwt", { session: false }), messageCreat);
+router.get("/messages", messageList);
+router.post(
+  "/messageCreat",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
+  messageCreat
+);
 
 module.exports = router;
